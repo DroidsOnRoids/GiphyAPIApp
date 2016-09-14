@@ -17,8 +17,10 @@ class TrendingGifs: UITableViewController {
         let trendingAPI = TrendingAPI()
         let treindingLimit = 5
         trendingAPI.requestLimitedTrendinGifs(treindingLimit) { (result) in
-            for jsonObject in result.value!["data"]! as! [AnyObject] {
-                self.gifs.append(Gif(json: jsonObject as? [String : AnyObject]))
+            if let dataValues = result.value?["data"] as? [AnyObject] {
+                for jsonObject in dataValues {
+                    self.gifs.append(Gif(json: jsonObject as? [String : AnyObject]))
+                }
             }
         }
     }

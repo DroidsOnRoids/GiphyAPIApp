@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		73FE8DEF14EB1F0C2F1C982F /* Pods_GiphyApiApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 31C45BF332526BC7C5D5CC93 /* Pods_GiphyApiApp.framework */; };
+		E517D8741D87DA9D000E86C4 /* Sticker.swift in Sources */ = {isa = PBXBuildFile; fileRef = E517D8731D87DA9D000E86C4 /* Sticker.swift */; };
+		E517D8761D87DAAF000E86C4 /* GiphyObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = E517D8751D87DAAF000E86C4 /* GiphyObject.swift */; };
+		E517D8781D87F0C6000E86C4 /* JSONValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E517D8771D87F0C6000E86C4 /* JSONValidatorTests.swift */; };
 		E55E4FA11D80456A00F60218 /* StickerServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55E4FA01D80456A00F60218 /* StickerServiceTests.swift */; };
 		E55E4FA61D81572000F60218 /* Gif.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55E4FA51D81572000F60218 /* Gif.swift */; };
 		E55E4FAA1D817E2200F60218 /* TrendingGifs.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55E4FA91D817E2200F60218 /* TrendingGifs.swift */; };
@@ -18,6 +21,7 @@
 		E58F1D641D3F6BDD005CE833 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E58F1D631D3F6BDD005CE833 /* Assets.xcassets */; };
 		E58F1D671D3F6BDD005CE833 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E58F1D651D3F6BDD005CE833 /* LaunchScreen.storyboard */; };
 		E5A69DBF1D80348A00466C84 /* SearchingServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A69DBE1D80348A00466C84 /* SearchingServiceTests.swift */; };
+		E5A6A8401D87FAEF00E2C31D /* sampleData.json in Resources */ = {isa = PBXBuildFile; fileRef = E5A6A83F1D87FAEF00E2C31D /* sampleData.json */; };
 		E5B5CB3A1D3F6E6B00A58640 /* SearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B5CB391D3F6E6B00A58640 /* SearchService.swift */; };
 		E5B5CB441D3F74CD00A58640 /* GiphyApiAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B5CB431D3F74CD00A58640 /* GiphyApiAppTests.swift */; };
 		E5B5CB4C1D3F74E300A58640 /* TrendingServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B5CB4B1D3F74E300A58640 /* TrendingServiceTests.swift */; };
@@ -41,6 +45,9 @@
 /* Begin PBXFileReference section */
 		31C45BF332526BC7C5D5CC93 /* Pods_GiphyApiApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GiphyApiApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		32EA82E0B1788E8CE37B8B57 /* Pods-GiphyApiApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GiphyApiApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GiphyApiApp/Pods-GiphyApiApp.debug.xcconfig"; sourceTree = "<group>"; };
+		E517D8731D87DA9D000E86C4 /* Sticker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sticker.swift; sourceTree = "<group>"; };
+		E517D8751D87DAAF000E86C4 /* GiphyObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GiphyObject.swift; sourceTree = "<group>"; };
+		E517D8771D87F0C6000E86C4 /* JSONValidatorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONValidatorTests.swift; sourceTree = "<group>"; };
 		E55E4FA01D80456A00F60218 /* StickerServiceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StickerServiceTests.swift; sourceTree = "<group>"; };
 		E55E4FA51D81572000F60218 /* Gif.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gif.swift; sourceTree = "<group>"; };
 		E55E4FA91D817E2200F60218 /* TrendingGifs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrendingGifs.swift; sourceTree = "<group>"; };
@@ -53,6 +60,7 @@
 		E58F1D661D3F6BDD005CE833 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E58F1D681D3F6BDD005CE833 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E5A69DBE1D80348A00466C84 /* SearchingServiceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchingServiceTests.swift; sourceTree = "<group>"; };
+		E5A6A83F1D87FAEF00E2C31D /* sampleData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sampleData.json; sourceTree = "<group>"; };
 		E5B5CB391D3F6E6B00A58640 /* SearchService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchService.swift; sourceTree = "<group>"; };
 		E5B5CB411D3F74CD00A58640 /* GiphyApiAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GiphyApiAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5B5CB431D3F74CD00A58640 /* GiphyApiAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiphyApiAppTests.swift; sourceTree = "<group>"; };
@@ -106,6 +114,8 @@
 			isa = PBXGroup;
 			children = (
 				E55E4FA51D81572000F60218 /* Gif.swift */,
+				E517D8751D87DAAF000E86C4 /* GiphyObject.swift */,
+				E517D8731D87DA9D000E86C4 /* Sticker.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -152,6 +162,8 @@
 				E5B5CB4B1D3F74E300A58640 /* TrendingServiceTests.swift */,
 				E5A69DBE1D80348A00466C84 /* SearchingServiceTests.swift */,
 				E55E4FA01D80456A00F60218 /* StickerServiceTests.swift */,
+				E517D8771D87F0C6000E86C4 /* JSONValidatorTests.swift */,
+				E5A6A83F1D87FAEF00E2C31D /* sampleData.json */,
 				E5B5CB451D3F74CD00A58640 /* Info.plist */,
 			);
 			path = GiphyApiAppTests;
@@ -284,6 +296,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E5A6A8401D87FAEF00E2C31D /* sampleData.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -355,12 +368,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E517D8761D87DAAF000E86C4 /* GiphyObject.swift in Sources */,
 				E58F1D5F1D3F6BDD005CE833 /* SecondViewController.swift in Sources */,
 				E5B5CB3A1D3F6E6B00A58640 /* SearchService.swift in Sources */,
 				E5C27E221D3F9F3000B46CAF /* APIConstants.swift in Sources */,
 				E58F1D5B1D3F6BDD005CE833 /* AppDelegate.swift in Sources */,
 				E5C27E241D3F9F3000B46CAF /* TrendingService.swift in Sources */,
 				E5C27E231D3F9F3000B46CAF /* StickersService.swift in Sources */,
+				E517D8741D87DA9D000E86C4 /* Sticker.swift in Sources */,
 				E58F1D5D1D3F6BDD005CE833 /* StickersViewController.swift in Sources */,
 				E55E4FAA1D817E2200F60218 /* TrendingGifs.swift in Sources */,
 				E5C27E211D3F9F3000B46CAF /* API.swift in Sources */,
@@ -374,6 +389,7 @@
 			files = (
 				E5B5CB4C1D3F74E300A58640 /* TrendingServiceTests.swift in Sources */,
 				E55E4FA11D80456A00F60218 /* StickerServiceTests.swift in Sources */,
+				E517D8781D87F0C6000E86C4 /* JSONValidatorTests.swift in Sources */,
 				E5A69DBF1D80348A00466C84 /* SearchingServiceTests.swift in Sources */,
 				E5B5CB441D3F74CD00A58640 /* GiphyApiAppTests.swift in Sources */,
 			);

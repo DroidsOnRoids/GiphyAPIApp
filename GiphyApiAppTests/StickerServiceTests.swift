@@ -29,7 +29,7 @@ class StickerServiceTests: XCTestCase {
 //MARK: - Url Base
 extension StickerServiceTests {
     
-    func testUrlBaseForLimitedTop5() {
+    func testUrlBaseForStrickerServiceSerach() {
         let baseURLFromAPiConstants = NSURL(string:APIConstants.baseURL)!
         XCTAssertEqual(baseURLFromAPiConstants, StickerService.StickerSearch(key: "key").baseURL)
     }

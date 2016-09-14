@@ -32,8 +32,6 @@ struct API {
 
 public final class NetworkRecorderPlugin : PluginType {
     
-    var disableRecording = false
-    
     public func willSendRequest(request: RequestType, target: TargetType) {
     
     }
