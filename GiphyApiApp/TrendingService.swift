@@ -11,16 +11,16 @@ import Moya
 import Result
 
 enum TrendingService {
-    case TrendingLimitedTo5
-    case TrendingLimitedTo10
-    case TrendingLimitedTo25
-    case TrendingLimited(limit: Int)
+    case trendingLimitedTo5
+    case trendingLimitedTo10
+    case trendingLimitedTo25
+    case trendingLimited(limit: Int)
 }
 
 extension TrendingService: TargetType {
     
-    var baseURL: NSURL {
-        return NSURL(string: APIConstants.baseURL)!
+    var baseURL: URL {
+        return URL(string: APIConstants.baseURL)!
     }
     
     var path : String {
@@ -35,101 +35,100 @@ extension TrendingService: TargetType {
         return "200"
     }
     
-    var sampleData: NSData {
-        guard let stubFile = stubFileName(forStatusCode: stubStatusCode),
-            data = NSData(contentsOfFile: stubFile) else { return NSData() }
+    var sampleData: Data {
+        guard let stubFile = stubFileName(forStatusCode: stubStatusCode), let data = try? Data(contentsOf: URL(fileURLWithPath: stubFile)) else { return Data() }
         
         return data
     }
-    
-    var parameters: [String: AnyObject]? {
+
+    var parameters: [String: Any]? {
         switch self {
-        case .TrendingLimitedTo5:
-            return ["api_key" : APIConstants.betaKey, "limit" : 5]
-        case .TrendingLimitedTo10:
-            return ["api_key" : APIConstants.betaKey, "limit" : 10]
-        case .TrendingLimitedTo25:
-            return ["api_key" : APIConstants.betaKey, "limit" : 25]
-        case .TrendingLimited(let limit):
-            return ["api_key" : APIConstants.betaKey, "limit" : limit]
+        case .trendingLimitedTo5:
+            return ["api_key" : APIConstants.betaKey as AnyObject, "limit" : 5 as AnyObject]
+        case .trendingLimitedTo10:
+            return ["api_key" : APIConstants.betaKey as AnyObject, "limit" : 10 as AnyObject]
+        case .trendingLimitedTo25:
+            return ["api_key" : APIConstants.betaKey as AnyObject, "limit" : 25 as AnyObject]
+        case .trendingLimited(let limit):
+            return ["api_key" : APIConstants.betaKey as AnyObject, "limit" : limit as AnyObject]
         }
     }
     
-    var multipartBody: [MultipartFormData]? {
-        return nil
+    var task: Task {
+        return Task.request
     }
 }
 
 struct TrendingAPI {
  
-    func request5TrendingGifs(completion: Result<[String: AnyObject], Error> -> ()) {
-        API.trendingService.request(.TrendingLimitedTo5) { (result) in
+    func request5TrendingGifs(_ completion: @escaping (Result<[String: AnyObject], Moya.Error>) -> ()) {
+       _ = API.trendingService.request(.trendingLimitedTo5) { (result) in
             switch result {
-            case let .Success(result):
+            case let .success(result):
                 do {
                     let json: [String: AnyObject]? = try result.mapJSON() as? [String: AnyObject]
                     if let json = json {
-                        completion(.Success(json))
+                        completion(.success(json))
                     }
                 } catch {
-                    completion(.Failure(Error.JSONMapping(result)))
+                    completion(.failure(Error.jsonMapping(result)))
                 }
-            case let .Failure(error):
-                completion(.Failure(error))
+            case let .failure(error):
+                completion(.failure(error))
             }
         }
     }
     
-    func request10TrendingGifs(completion: Result<[String: AnyObject], Error> -> ()) {
-        API.trendingService.request(.TrendingLimitedTo10) { (result) in
+    func request10TrendingGifs(_ completion: @escaping (Result<[String: AnyObject], Moya.Error>) -> ()) {
+       _ = API.trendingService.request(.trendingLimitedTo10) { (result) in
             switch result {
-            case let .Success(result):
+            case let .success(result):
                 do {
                     let json: [String: AnyObject]? = try result.mapJSON() as? [String: AnyObject]
                     if let json = json {
-                        completion(.Success(json))
+                        completion(.success(json))
                     }
                 } catch {
-                    completion(.Failure(Error.JSONMapping(result)))
+                    completion(.failure(Error.jsonMapping(result)))
                 }
-            case let .Failure(error):
-                completion(.Failure(error))
+            case let .failure(error):
+                completion(.failure(error))
             }
         }
     }
     
-    func request25TrendingGifs(completion: Result<[String: AnyObject], Error> -> ()) {
-        API.trendingService.request(.TrendingLimitedTo25) { (result) in
+    func request25TrendingGifs(_ completion: @escaping (Result<[String: AnyObject], Moya.Error>) -> ()) {
+       _ = API.trendingService.request(.trendingLimitedTo25) { (result) in
             switch result {
-            case let .Success(result):
+            case let .success(result):
                 do {
                     let json: [String: AnyObject]? = try result.mapJSON() as? [String: AnyObject]
                     if let json = json {
-                        completion(.Success(json))
+                        completion(.success(json))
                     }
                 } catch {
-                    completion(.Failure(Error.JSONMapping(result)))
+                    completion(.failure(Error.jsonMapping(result)))
                 }
-            case let .Failure(error):
-                completion(.Failure(error))
+            case let .failure(error):
+                completion(.failure(error))
             }
         }
     }
     
-    func requestLimitedTrendinGifs(limit: Int, completion: Result<[String: AnyObject], Error> -> ()) {
-        API.trendingService.request(.TrendingLimited(limit: limit)) { (result) in
+    func requestLimitedTrendinGifs(_ limit: Int, completion: @escaping (Result<[String: AnyObject], Moya.Error>) -> ()) {
+        _ = API.trendingService.request(.trendingLimited(limit: limit)) { (result) in
             switch result {
-            case let .Success(result):
+            case let .success(result):
                 do {
                     let json: [String: AnyObject]? = try result.mapJSON() as? [String: AnyObject]
                     if let json = json {
-                        completion(.Success(json))
+                        completion(.success(json))
                     }
                 } catch {
-                    completion(.Failure(Error.JSONMapping(result)))
+                    completion(.failure(Error.jsonMapping(result)))
                 }
-            case let .Failure(error):
-                completion(.Failure(error))
+            case let .failure(error):
+                completion(.failure(error))
             }
         }
     }

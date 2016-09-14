@@ -11,27 +11,27 @@ import Result
 
 
 enum StickerService {
-    case StickerSearch(key: String)
-    case StickerRoulette()
-    case StrickerTrending()
-    case StrickerTranslate(key: String)
+    case stickerSearch(key: String)
+    case stickerRoulette()
+    case strickerTrending()
+    case strickerTranslate(key: String)
 }
 
 extension StickerService: TargetType {
     
-    var baseURL: NSURL {
-        return NSURL(string: APIConstants.baseURL)!
+    var baseURL: URL {
+        return URL(string: APIConstants.baseURL)!
     }
     
     var path : String {
         switch self {
-        case .StickerSearch(_):
+        case .stickerSearch(_):
             return "stickers/search"
-        case .StickerRoulette():
+        case .stickerRoulette():
             return "stickers/random"
-        case .StrickerTrending():
+        case .strickerTrending():
             return "stickers/trending"
-        case .StrickerTranslate(_):
+        case .strickerTranslate(_):
             return "stickers/translate"
         }
     }
@@ -44,99 +44,99 @@ extension StickerService: TargetType {
         return "200"
     }
     
-    var sampleData: NSData {
-        guard let stubFile = stubFileName(forStatusCode: stubStatusCode),
-            data = NSData(contentsOfFile: stubFile) else { return NSData() }
+    var sampleData: Data {
+        guard let stubFile = stubFileName(forStatusCode: stubStatusCode), let data = try? Data(contentsOf: URL(fileURLWithPath: stubFile)) else { return Data() }
         
         return data
     }
+
     
-    var parameters: [String: AnyObject]? {
+    var parameters: [String: Any]? {
         switch self {
-        case .StickerSearch(let key):
-            return ["q" : key, "api_key" : APIConstants.betaKey]
-        case .StrickerTranslate(let key):
-            return ["s" : key, "api_key" : APIConstants.betaKey]
+        case .stickerSearch(let key):
+            return ["q" : key as AnyObject, "api_key" : APIConstants.betaKey as AnyObject]
+        case .strickerTranslate(let key):
+            return ["s" : key as AnyObject, "api_key" : APIConstants.betaKey as AnyObject]
         default:
-            return ["api_key" : APIConstants.betaKey]
+            return ["api_key" : APIConstants.betaKey as AnyObject]
         }
     }
     
-    var multipartBody: [MultipartFormData]? {
-        return nil
+    var task: Task {
+        return Task.request
     }
 }
 
 struct StickerAPI {
     
-    func searchForSticker(searchingKey: String, completion: Result<[String: AnyObject], Error> -> ()) {
-        API.stickerService.request(.StickerSearch(key: searchingKey)) { (result) in
+    func searchForSticker(_ searchingKey: String, completion: @escaping (Result<[String: AnyObject], Moya.Error>) -> ()) {
+       _ = API.stickerService.request(.stickerSearch(key: searchingKey)) { (result) in
             switch result {
-            case let .Success(result):
+            case let .success(result):
                 do {
                     let json: [String: AnyObject]? = try result.mapJSON() as? [String: AnyObject]
                     if let json = json {
-                        completion(.Success(json))
+                        completion(.success(json))
                     }
                 } catch {
-                    completion(.Failure(Error.JSONMapping(result)))
+                    completion(.failure(Error.jsonMapping(result)))
                 }
-            case let .Failure(error):
-                completion(.Failure(error))
+            case let .failure(error):
+                completion(.failure(error))
             }
         }
     }
    
-    func translateSticker(searchingKey: String, completion: Result<[String: AnyObject], Error> -> ()) {
-        API.stickerService.request(.StrickerTranslate(key: searchingKey)) { (result) in
+    func translateSticker(_ searchingKey: String, completion: @escaping (Result<[String: AnyObject], Moya.Error>) -> ()) {
+        _ = API.stickerService.request(.strickerTranslate(key: searchingKey)) { (result) in
             switch result {
-            case let .Success(result):
+            case let .success(result):
                 do {
                     let json: [String: AnyObject]? = try result.mapJSON() as? [String: AnyObject]
                     if let json = json {
-                        completion(.Success(json))
+                        completion(.success(json))
                     }
                 } catch {
-                    completion(.Failure(Error.JSONMapping(result)))
+                    completion(.failure(Error.jsonMapping(result)))
                 }
-            case let .Failure(error):
-                completion(.Failure(error))
+            case let .failure(error):
+                completion(.failure(error))
             }
         }
     }
     
-    func randomSticker( completion: Result<[String: AnyObject], Error> -> ()) {
-        API.stickerService.request(.StickerRoulette()) { (result) in
+    func randomSticker( _ completion: @escaping (Result<[String: AnyObject], Moya.Error>) -> ()) {
+       _ = API.stickerService.request(.stickerRoulette()) { (result) in
             switch result {
-            case let .Success(result):
+            case let .success(result):
                 do {
                     let json: [String: AnyObject]? = try result.mapJSON() as? [String: AnyObject]
                     if let json = json {
-                        completion(.Success(json))
+                        completion(.success(json))
                     }
                 } catch {
-                    completion(.Failure(Error.JSONMapping(result)))
+                    completion(.failure(Error.jsonMapping(result)))
                 }
-            case let .Failure(error):
-                completion(.Failure(error))
+            case let .failure(error):
+                completion(.failure(error))
             }
         }
     }
    
-    func trendingSticker( completion: Result<[String: AnyObject], Error> -> ()) {
-        API.stickerService.request(.StrickerTrending()) { (result) in
+    func trendingSticker( _ completion: @escaping (Result<[String: AnyObject], Moya.Error>) -> ()) {
+       _ = API.stickerService.request(.strickerTrending()) { (result) in
             switch result {
-            case let .Success(result):
+            case let .success(result):
                 do {
                     let json: [String: AnyObject]? = try result.mapJSON() as? [String: AnyObject]
                     if let json = json {
-                        completion(.Success(json))
+                        completion(.success(json))
                     }
                 } catch {
-                    completion(.Failure(Error.JSONMapping(result)))
+                    completion(.failure(Error.jsonMapping(result)))
                 }
-            case let .Failure(error):
-                completion(.Failure(error))
+            case let .failure(error):
+                completion(.failure(error))
             }
         }
     }
