@@ -12,12 +12,12 @@ import XCTest
 
 class JSONValidatorTests: XCTestCase {
     
-    var jsonData : NSData?
+    var jsonData : Data?
  
     override func setUp() {
         super.setUp()
-        let bundle = NSBundle(forClass: self.classForCoder)
-        jsonData = NSData(contentsOfFile: bundle.pathForResource("sampleData", ofType: "json", inDirectory: nil)!)
+        let bundle = Bundle(for: self.classForCoder)
+        jsonData = try? Data(contentsOf: URL(fileURLWithPath: bundle.path(forResource: "sampleData", ofType: "json", inDirectory: nil)!))
     }
     
 
@@ -28,8 +28,8 @@ class JSONValidatorTests: XCTestCase {
     
     func testParseNotValidJSON() {
         
-        jsonData = "empty data".dataUsingEncoding(NSUTF8StringEncoding)
-        if let jsonData = jsonData, let _ = try? NSJSONSerialization.JSONObjectWithData(jsonData, options: .AllowFragments) as? [String: AnyObject] {
+        jsonData = "empty data".data(using: String.Encoding.utf8)
+        if let jsonData = jsonData, let _ = try? JSONSerialization.jsonObject(with: jsonData, options: .allowFragments) as? [String: AnyObject] {
             XCTFail()
             
         }
@@ -37,7 +37,7 @@ class JSONValidatorTests: XCTestCase {
     
     func testParseValidJSON() {
         do {
-         try NSJSONSerialization.JSONObjectWithData(jsonData!, options: .AllowFragments) as? [String: AnyObject]
+         try JSONSerialization.jsonObject(with: jsonData!, options: .allowFragments)
         } catch {
             XCTFail()
         }
@@ -46,7 +46,7 @@ class JSONValidatorTests: XCTestCase {
     func testParseValidJSONintoGIF() {
         var gifs = [Gif]()
         
-        if let jsonData = jsonData, let result = try? NSJSONSerialization.JSONObjectWithData(jsonData, options: .AllowFragments) as? [String: AnyObject]{
+        if let jsonData = jsonData, let result = try? JSONSerialization.jsonObject(with: jsonData, options: .allowFragments) as? [String: AnyObject]{
           
             if let dataValues = result!["data"] as? [AnyObject] {
                 for jsonObject in dataValues {
@@ -66,7 +66,7 @@ class JSONValidatorTests: XCTestCase {
     func testParseJSONandVerifyGifsId() {
         var gifs = [Gif]()
         
-        if let jsonData = jsonData, let result = try? NSJSONSerialization.JSONObjectWithData(jsonData, options: .AllowFragments) as? [String: AnyObject]{
+        if let jsonData = jsonData, let result = try? JSONSerialization.jsonObject(with: jsonData, options: .allowFragments) as? [String: AnyObject]{
             
             if let dataValues = result!["data"] as? [AnyObject] {
                 for jsonObject in dataValues {
@@ -86,8 +86,8 @@ class JSONValidatorTests: XCTestCase {
     func testParsePartialyBrokenJSON() {
         var gifs = [Gif]()
         
-        jsonData = "{\"data\":[{}]}".dataUsingEncoding(NSUTF8StringEncoding)
-        if let jsonData = jsonData, let result = try? NSJSONSerialization.JSONObjectWithData(jsonData, options: .AllowFragments) as? [String: AnyObject]{
+        jsonData = "{\"data\":[{}]}".data(using: String.Encoding.utf8)
+        if let jsonData = jsonData, let result = try? JSONSerialization.jsonObject(with: jsonData, options: .allowFragments) as? [String: AnyObject]{
             
             if let dataValues = result!["data"] as? [AnyObject] {
                 for jsonObject in dataValues {

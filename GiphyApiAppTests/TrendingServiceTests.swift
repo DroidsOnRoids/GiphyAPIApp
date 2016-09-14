@@ -29,18 +29,18 @@ class TrendingServiceTests: XCTestCase {
 extension TrendingServiceTests {
 
     func testUrlBaseForLimitedTop5() {
-        let baseURLFromAPiConstants = NSURL(string:APIConstants.baseURL)!
-        XCTAssertEqual(baseURLFromAPiConstants, TrendingService.TrendingLimitedTo5.baseURL)
+        let baseURLFromAPiConstants = URL(string:APIConstants.baseURL)!
+        XCTAssertEqual(baseURLFromAPiConstants, TrendingService.trendingLimitedTo5.baseURL)
     }
     
     func testUrlBaseForLimitedTop10() {
-        let baseURLFromAPiConstants = NSURL(string:APIConstants.baseURL)!
-        XCTAssertEqual(baseURLFromAPiConstants, TrendingService.TrendingLimitedTo10.baseURL)
+        let baseURLFromAPiConstants = URL(string:APIConstants.baseURL)!
+        XCTAssertEqual(baseURLFromAPiConstants, TrendingService.trendingLimitedTo10.baseURL)
     }
     
     func testUrlBaseForLimitedTop25() {
-        let baseURLFromAPiConstants = NSURL(string:APIConstants.baseURL)!
-        XCTAssertEqual(baseURLFromAPiConstants, TrendingService.TrendingLimitedTo25.baseURL)
+        let baseURLFromAPiConstants = URL(string:APIConstants.baseURL)!
+        XCTAssertEqual(baseURLFromAPiConstants, TrendingService.trendingLimitedTo25.baseURL)
     }
     
 }
@@ -48,7 +48,7 @@ extension TrendingServiceTests {
 extension TrendingServiceTests {
    
     func testPathForTrending() {
-        XCTAssertEqual(("https://api.giphy.com/v1/gifs/trending"), TrendingService.TrendingLimitedTo5.baseURL.absoluteString + TrendingService.TrendingLimitedTo5.path)
+        XCTAssertEqual(("https://api.giphy.com/v1/gifs/trending"), TrendingService.trendingLimitedTo5.baseURL.absoluteString + TrendingService.trendingLimitedTo5.path)
     }
    
 }
@@ -57,18 +57,20 @@ extension TrendingServiceTests {
 extension TrendingServiceTests {
     
     func testParametersForTop5() {
-        let parameters = ["api_key": APIConstants.betaKey, "limit": 5]
-        XCTAssertEqual(parameters, TrendingService.TrendingLimitedTo5.parameters)
+        let parameters = ["api_key": APIConstants.betaKey , "limit": 5] as [String : Any]
+        let p = TrendingService.trendingLimitedTo5.parameters
+        XCTAssertEqual(parameters as NSDictionary , p! as NSDictionary)
     }
     
+    
     func testParametersForTop10() {
-        let parameters = ["api_key": APIConstants.betaKey, "limit": 10]
-        XCTAssertEqual(parameters, TrendingService.TrendingLimitedTo10.parameters)
+        let parameters = ["api_key": APIConstants.betaKey, "limit": 10] as [String : Any]
+        XCTAssertEqual(parameters as NSDictionary, TrendingService.trendingLimitedTo10.parameters! as NSDictionary)
     }
 
     func testParametersForTop25() {
-        let parameters = ["api_key": APIConstants.betaKey, "limit": 25]
-        XCTAssertEqual(parameters, TrendingService.TrendingLimitedTo25.parameters)
+        let parameters = ["api_key": APIConstants.betaKey, "limit": 25] as [String : Any]
+        XCTAssertEqual(parameters as NSDictionary, TrendingService.trendingLimitedTo25.parameters! as NSDictionary)
     }
 }
 
@@ -76,15 +78,15 @@ extension TrendingServiceTests {
 extension TrendingServiceTests {
 
     func testSampleDataForTop5() {
-        XCTAssertNotEqual(NSData(), TrendingService.TrendingLimitedTo5.sampleData)
+        XCTAssertNotEqual(Data(), TrendingService.trendingLimitedTo5.sampleData)
     }
     
     func testSampleDataForTop10() {
-        XCTAssertNotEqual(NSData(), TrendingService.TrendingLimitedTo10.sampleData)
+        XCTAssertNotEqual(Data(), TrendingService.trendingLimitedTo10.sampleData)
     }
     
     func testSampleDataForTop25() {
-        XCTAssertNotEqual(NSData(), TrendingService.TrendingLimitedTo25.sampleData)
+        XCTAssertNotEqual(Data(), TrendingService.trendingLimitedTo25.sampleData)
     }
 }
 
@@ -92,7 +94,7 @@ extension TrendingServiceTests {
 extension TrendingServiceTests {
    
     func testCall5TrendingGifs() {
-        let expectation = expectationWithDescription("call request for 5 trending Gifs")
+        let expectation = self.expectation(description: "call request for 5 trending Gifs")
 
         let trendingAPI = TrendingAPI()
         
@@ -105,7 +107,7 @@ extension TrendingServiceTests {
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(10) { error in
+        waitForExpectations(timeout: 10) { error in
             if let error = error  {
                 print("error \(error.localizedDescription)")
             }
@@ -113,7 +115,7 @@ extension TrendingServiceTests {
     }
     
     func testStatus200() {
-        let expectation = expectationWithDescription("Check result of request for 5 trending Gifs")
+        let expectation = self.expectation(description: "Check result of request for 5 trending Gifs")
         
         let trendingAPI = TrendingAPI()
         
@@ -121,13 +123,13 @@ extension TrendingServiceTests {
             if let _ = result.error {
                 XCTFail()
             } else {
-                let str = 200
-                XCTAssertEqual(str, result.value!["meta"]!["status"])
+                let status = 200
+                XCTAssertEqual(status, result.value!["meta"]!["status"]! as AnyObject as? Int)
             }
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(10) { error in
+        waitForExpectations(timeout: 10) { error in
             if let error = error  {
                 print("error \(error.localizedDescription)")
             }
@@ -135,7 +137,7 @@ extension TrendingServiceTests {
     }
 
     func testZReadFromStubFor5() {
-        let expectation = expectationWithDescription("Read stub from disk")
+        let expectation = self.expectation(description: "Read stub from disk")
         
         API.stubbing = true
         let trendingAPI = TrendingAPI()
@@ -144,13 +146,13 @@ extension TrendingServiceTests {
             if let _ = result.error {
                 XCTFail()
             } else {
-                let str = 200
-                XCTAssertEqual(str, result.value!["meta"]!["status"])
+                let status = 200
+                XCTAssertEqual(status, result.value!["meta"]!["status"] as AnyObject as? Int)
             }
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(10) { error in
+        waitForExpectations(timeout: 10) { error in
             if let error = error  {
                 print("error \(error.localizedDescription)")
             }
@@ -165,7 +167,7 @@ extension TrendingServiceTests {
     //TEST FOR 10
     
     func testCall10TrendingGifs() {
-        let expectation = expectationWithDescription("call request for 5 trending Gifs")
+        let expectation = self.expectation(description: "call request for 5 trending Gifs")
         
         let trendingAPI = TrendingAPI()
         
@@ -178,7 +180,7 @@ extension TrendingServiceTests {
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(10) { error in
+        waitForExpectations(timeout: 10) { error in
             if let error = error  {
                 print("error \(error.localizedDescription)")
             }
@@ -186,7 +188,7 @@ extension TrendingServiceTests {
     }
     
     func testStatus200For10() {
-        let expectation = expectationWithDescription("Check result of request for 5 trending Gifs")
+        let expectation = self.expectation(description: "Check result of request for 5 trending Gifs")
        
         let trendingAPI = TrendingAPI()
         
@@ -194,13 +196,13 @@ extension TrendingServiceTests {
             if let _ = result.error {
                 XCTFail()
             } else {
-                let str = 200
-                XCTAssertEqual(str, result.value!["meta"]!["status"])
+                let status = 200
+                XCTAssertEqual(status, result.value!["meta"]!["status"] as AnyObject as? Int)
             }
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(10) { error in
+        waitForExpectations(timeout: 10) { error in
             if let error = error  {
                 print("error \(error.localizedDescription)")
             }
@@ -208,7 +210,7 @@ extension TrendingServiceTests {
     }
     
     func testReadFromStubFor10() {
-        let expectation = expectationWithDescription("Read empty stub from disk")
+        let expectation = self.expectation(description: "Read empty stub from disk")
        
         API.stubbing = true
         let trendingAPI = TrendingAPI()
@@ -217,13 +219,13 @@ extension TrendingServiceTests {
             if let _ = result.error {
                 XCTFail()
             } else {
-                let str = 200
-                XCTAssertEqual(str, result.value!["meta"]!["status"])
+                let status = 200
+                XCTAssertEqual(status, result.value!["meta"]!["status"] as AnyObject as? Int)
             }
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(10) { error in
+        waitForExpectations(timeout: 10) { error in
             if let error = error  {
                 print("error \(error.localizedDescription)")
             }
@@ -236,7 +238,7 @@ extension TrendingServiceTests {
 extension TrendingServiceTests {
     
     func testCall25TrendingGifs() {
-        let expectation = expectationWithDescription("call request for 5 trending Gifs")
+        let expectation = self.expectation(description: "call request for 5 trending Gifs")
 
         let trendingAPI = TrendingAPI()
        
@@ -249,7 +251,7 @@ extension TrendingServiceTests {
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(10) { error in
+        waitForExpectations(timeout: 10) { error in
             if let error = error  {
                 print("error \(error.localizedDescription)")
             }
@@ -257,7 +259,7 @@ extension TrendingServiceTests {
     }
     
     func testStatus200For25() {
-        let expectation = expectationWithDescription("Check result of request for 5 trending Gifs")
+        let expectation = self.expectation(description: "Check result of request for 5 trending Gifs")
         
         let trendingAPI = TrendingAPI()
         
@@ -265,13 +267,13 @@ extension TrendingServiceTests {
             if let _ = result.error {
                 XCTFail()
             } else {
-                let str = 200
-                XCTAssertEqual(str, result.value!["meta"]!["status"])
+                let status = 200
+                XCTAssertEqual(status, result.value!["meta"]!["status"] as AnyObject as? Int)
             }
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(10) { error in
+        waitForExpectations(timeout: 10) { error in
             if let error = error  {
                 print("error \(error.localizedDescription)")
             }
@@ -279,7 +281,7 @@ extension TrendingServiceTests {
     }
     
     func testReadFromStubFor25() {
-        let expectation = self.expectationWithDescription("Read cleaned stub from disk")
+        let expectation = self.expectation(description: "Read cleaned stub from disk")
        
         API.stubbing = true
         let trendingAPI = TrendingAPI()
@@ -288,13 +290,13 @@ extension TrendingServiceTests {
             if let _ = result.error {
                 XCTFail()
             } else {
-                let str = 200
-                XCTAssertEqual(str, result.value!["meta"]!["status"])
+                let status = 200
+                XCTAssertEqual(status, result.value!["meta"]!["status"] as AnyObject as? Int)
             }
             expectation.fulfill()
         }
         
-        self.waitForExpectationsWithTimeout(10) { error in
+        self.waitForExpectations(timeout: 10) { error in
             if let error = error  {
                 print("error \(error.localizedDescription)")
             }
@@ -307,7 +309,7 @@ extension TrendingServiceTests {
 extension TrendingServiceTests {
     
     func testRequestLimitedTrendingGifs() {
-        let expectation = expectationWithDescription("request for 12 trending Gifs")
+        let expectation = self.expectation(description: "request for 12 trending Gifs")
         
         let trendingAPI = TrendingAPI()
         
@@ -315,12 +317,12 @@ extension TrendingServiceTests {
             if let _ = result.error {
                 XCTFail()
             } else {
-                XCTAssertEqual(12, result.value!["pagination"]!["count"])
+                XCTAssertEqual(12, result.value!["pagination"]!["count"] as AnyObject as? Int)
             }
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(10) { error in
+        waitForExpectations(timeout: 10) { error in
             if let error = error  {
                 print("error \(error.localizedDescription)")
             }

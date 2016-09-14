@@ -30,8 +30,8 @@ class StickerServiceTests: XCTestCase {
 extension StickerServiceTests {
     
     func testUrlBaseForStrickerServiceSerach() {
-        let baseURLFromAPiConstants = NSURL(string:APIConstants.baseURL)!
-        XCTAssertEqual(baseURLFromAPiConstants, StickerService.StickerSearch(key: "key").baseURL)
+        let baseURLFromAPiConstants = URL(string:APIConstants.baseURL)!
+        XCTAssertEqual(baseURLFromAPiConstants, StickerService.stickerSearch(key: "key").baseURL)
     }
     
     
@@ -40,19 +40,19 @@ extension StickerServiceTests {
 extension StickerServiceTests {
     
     func testPathForSearching() {
-        XCTAssertEqual(("https://api.giphy.com/v1/stickers/search"), StickerService.StickerSearch(key: "key").baseURL.absoluteString + StickerService.StickerSearch(key: "key").path)
+        XCTAssertEqual(("https://api.giphy.com/v1/stickers/search"), StickerService.stickerSearch(key: "key").baseURL.absoluteString + StickerService.stickerSearch(key: "key").path)
     }
     
     func testPathForTranslating() {
-        XCTAssertEqual(("https://api.giphy.com/v1/stickers/translate"), StickerService.StickerSearch(key: "key").baseURL.absoluteString + StickerService.StrickerTranslate(key: "key").path)
+        XCTAssertEqual(("https://api.giphy.com/v1/stickers/translate"), StickerService.stickerSearch(key: "key").baseURL.absoluteString + StickerService.strickerTranslate(key: "key").path)
     }
     
     func testPathForTrending() {
-        XCTAssertEqual(("https://api.giphy.com/v1/stickers/trending"), StickerService.StickerSearch(key: "key").baseURL.absoluteString + StickerService.StrickerTrending().path)
+        XCTAssertEqual(("https://api.giphy.com/v1/stickers/trending"), StickerService.stickerSearch(key: "key").baseURL.absoluteString + StickerService.strickerTrending().path)
     }
     
     func testPathForRandom() {
-        XCTAssertEqual(("https://api.giphy.com/v1/stickers/random"), StickerService.StickerSearch(key: "key").baseURL.absoluteString + StickerService.StickerRoulette().path)
+        XCTAssertEqual(("https://api.giphy.com/v1/stickers/random"), StickerService.stickerSearch(key: "key").baseURL.absoluteString + StickerService.stickerRoulette().path)
     }
 }
 
@@ -60,7 +60,7 @@ extension StickerServiceTests {
 extension StickerServiceTests {
     
     func testSampleDataForSearch() {
-        XCTAssertNotEqual(NSData(), StickerService.StickerSearch(key: "dog").sampleData)
+        XCTAssertNotEqual(Data(), StickerService.stickerSearch(key: "dog").sampleData)
     }
 }
 
@@ -68,7 +68,7 @@ extension StickerServiceTests {
 extension StickerServiceTests {
     
     func testStickerSearching() {
-        let expectation = expectationWithDescription("request for searching dog's stickers ")
+        let expectation = self.expectation(description: "request for searching dog's stickers ")
         
         let stickerAPI = StickerAPI()
         stickerAPI.searchForSticker("cats") { (result) in
@@ -76,13 +76,13 @@ extension StickerServiceTests {
             if let _ = result.error {
                 XCTFail()
             } else {
-                let str = 200
-                XCTAssertEqual(str, result.value!["meta"]!["status"])
+                let status = 200
+                XCTAssertEqual(status, result.value!["meta"]!["status"] as AnyObject as? Int)
             }
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(10) { error in
+        waitForExpectations(timeout: 10) { error in
             if let error = error  {
                 print("error \(error.localizedDescription)")
             }
@@ -90,7 +90,7 @@ extension StickerServiceTests {
     }
     
     func testStickerTranslate() {
-        let expectation = expectationWithDescription("request for dog's stickers translate")
+        let expectation = self.expectation(description: "request for dog's stickers translate")
         
         let stickerAPI = StickerAPI()
         stickerAPI.translateSticker("dogs", completion: { (result) in
@@ -98,13 +98,13 @@ extension StickerServiceTests {
             if let _ = result.error {
                 XCTFail()
             } else {
-                let str = 200
-                XCTAssertEqual(str, result.value!["meta"]!["status"])
+                let status = 200
+                XCTAssertEqual(status, result.value!["meta"]!["status"] as AnyObject as? Int)
             }
             expectation.fulfill()
         })
         
-        waitForExpectationsWithTimeout(10) { error in
+        waitForExpectations(timeout: 10) { error in
             if let error = error  {
                 print("error \(error.localizedDescription)")
             }
@@ -112,13 +112,13 @@ extension StickerServiceTests {
     }
     
     func testRandomSticker() {
-        let expectation1 = expectationWithDescription("request for one random sticker")
-        let expectation2 = expectationWithDescription("request for one random sticker")
+        let expectation1 = expectation(description: "request for one random sticker")
+        let expectation2 = expectation(description: "request for one random sticker")
         
         requestRandomSticker(expectation1)
         requestRandomSticker(expectation2)
         
-        waitForExpectationsWithTimeout(10) { error in
+        waitForExpectations(timeout: 10) { error in
             if let error = error  {
                 print("error \(error.localizedDescription)")
             }
@@ -131,13 +131,13 @@ extension StickerServiceTests {
 
 extension StickerServiceTests {
     
-    func requestRandomSticker(expectation : XCTestExpectation) {
+    func requestRandomSticker(_ expectation : XCTestExpectation) {
         let stickerAPI = StickerAPI()
         
         stickerAPI.randomSticker() { (result) in
             print(result)
             if result.error == nil {
-                if let stickerId = result.value?["data"]?["id"] as? AnyObject as? String {
+                if let stickerId = result.value?["data"]?["id"] as AnyObject as? String {
                     self.randomStickers.insert(stickerId)
                 }
             }

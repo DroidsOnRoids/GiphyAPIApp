@@ -29,8 +29,8 @@ class SearchingServiceTests: XCTestCase {
 extension SearchingServiceTests {
     
     func testUrlBaseForLimitedTop5() {
-        let baseURLFromAPiConstants = NSURL(string:APIConstants.baseURL)!
-        XCTAssertEqual(baseURLFromAPiConstants, SearchService.SearchGiphy(key: "").baseURL)
+        let baseURLFromAPiConstants = URL(string:APIConstants.baseURL)!
+        XCTAssertEqual(baseURLFromAPiConstants, SearchService.searchGiphy(key: "").baseURL)
     }
     
     
@@ -39,7 +39,7 @@ extension SearchingServiceTests {
 extension SearchingServiceTests {
     
     func testPathForTrending() {
-        XCTAssertEqual(("https://api.giphy.com/v1/gifs/search"), SearchService.SearchGiphy(key: "key").baseURL.absoluteString + SearchService.SearchGiphy(key: "key").path)
+        XCTAssertEqual(("https://api.giphy.com/v1/gifs/search"), SearchService.searchGiphy(key: "key").baseURL.absoluteString + SearchService.searchGiphy(key: "key").path)
     }
     
 }
@@ -48,7 +48,7 @@ extension SearchingServiceTests {
 extension SearchingServiceTests {
     
     func testSampleDataForSearch() {
-        XCTAssertNotEqual(NSData(), SearchService.SearchGiphy(key: "dog").sampleData)
+        XCTAssertNotEqual(Data(), SearchService.searchGiphy(key: "dog").sampleData)
     }
 }
 
@@ -56,7 +56,7 @@ extension SearchingServiceTests {
 extension SearchingServiceTests {
     
     func testSearching() {
-        let expectation = expectationWithDescription("request for searching dog's gifs")
+        let expectation = self.expectation(description: "request for searching dog's gifs")
         
         let searchAPI = SearchAPI()
         searchAPI.searchForKey("dogs") { (result) in
@@ -64,14 +64,14 @@ extension SearchingServiceTests {
             if let _ = result.error {
                 XCTFail()
             } else {
-                let str = 200
-                XCTAssertEqual(str, result.value!["meta"]!["status"])
-                XCTAssertNotEqual(0, result.value!["pagination"]!["count"])
+                let status = 200
+                XCTAssertEqual(status, result.value!["meta"]!["status"] as AnyObject as? Int)
+                XCTAssertNotEqual(0, result.value!["pagination"]!["count"] as AnyObject as? Int)
             }
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(10) { error in
+        waitForExpectations(timeout: 10) { error in
             if let error = error  {
                 print("error \(error.localizedDescription)")
             }
@@ -79,7 +79,7 @@ extension SearchingServiceTests {
 }
     
     func testCallSearchingWithLimit() {
-        let expectation = expectationWithDescription("call request for searching dogs gifs")
+        let expectation = self.expectation(description: "call request for searching dogs gifs")
         
         let searchAPI = SearchAPI()
         let limitCount = 5
@@ -88,14 +88,14 @@ extension SearchingServiceTests {
             if let _ = result.error {
                 XCTFail()
             } else {
-                let str = 200
-                XCTAssertEqual(str, result.value!["meta"]!["status"])
-                XCTAssertEqual(limitCount, result.value!["pagination"]!["count"])
+                let status = 200
+                XCTAssertEqual(status, result.value!["meta"]!["status"] as AnyObject as? Int)
+                XCTAssertEqual(limitCount, result.value!["pagination"]!["count"] as AnyObject as? Int)
             }
             expectation.fulfill()
         })
     
-        waitForExpectationsWithTimeout(10) { error in
+        waitForExpectations(timeout: 10) { error in
             if let error = error  {
                 print("error \(error.localizedDescription)")
             }

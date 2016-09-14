@@ -32,25 +32,25 @@ class TrendingGifs: UITableViewController {
     }
 
     
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return gifs.count
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("cellGif", forIndexPath: indexPath) as UITableViewCell
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cellGif", for: indexPath) as UITableViewCell
 
-        if let gif = gifs[indexPath.row] {
+        if let gif = gifs[(indexPath as NSIndexPath).row] {
             cell.textLabel!.text = gif.id
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
-                let url = NSURL(string: gif.mediaUrl!)
-                let data = NSData(contentsOfURL: url!)
+            DispatchQueue.global().async {
+                let url = URL(string: gif.mediaUrl!)
+                let data = try? Data(contentsOf: url!)
                 let image = UIImage(data: data!)
-                dispatch_async(dispatch_get_main_queue(), {
-                    let cellForUpdate = tableView.cellForRowAtIndexPath(indexPath)
+                DispatchQueue.main.async(execute: {
+                    let cellForUpdate = tableView.cellForRow(at: indexPath)
                     cellForUpdate!.imageView!.image = image
                     
                 })

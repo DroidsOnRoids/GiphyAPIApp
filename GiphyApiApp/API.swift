@@ -19,7 +19,7 @@ struct API {
     static var searchingService = API.service(SearchService.self)
     static var stickerService = API.service(StickerService.self)
     
-    private static func service<T: TargetType>(target: T.Type) ->  MoyaProvider<T> {
+    fileprivate static func service<T: TargetType>(_ target: T.Type) ->  MoyaProvider<T> {
         if stubbing && !disableRecording {
             return MoyaProvider<T>(stubClosure: MoyaProvider.ImmediatelyStub)
         } else if !stubbing {
@@ -32,18 +32,18 @@ struct API {
 
 public final class NetworkRecorderPlugin : PluginType {
     
-    public func willSendRequest(request: RequestType, target: TargetType) {
+    public func willSendRequest(_ request: RequestType, target: TargetType) {
     
     }
     
-    public func didReceiveResponse(result: Result<Moya.Response, Moya.Error>, target: TargetType) {
+    public func didReceiveResponse(_ result: Result<Moya.Response, Moya.Error>, target: TargetType) {
         switch result {
-        case .Failure(_): ()
-        case .Success(let response):
+        case .failure(_): ()
+        case .success(let response):
             do {
                 let text = try response.mapString()
                 if let stubsPath = target.stubFileName(forStatusCode: "\(response.statusCode)") {
-                    try text.writeToFile(stubsPath, atomically: true, encoding: NSUTF8StringEncoding)
+                    try text.write(toFile: stubsPath, atomically: true, encoding: String.Encoding.utf8)
                 }
             } catch {
                 print("There was a problem with recording the request. Check your recording path or disable recording!")
@@ -54,6 +54,6 @@ public final class NetworkRecorderPlugin : PluginType {
 
 extension String {
     var URLEscapedString: String {
-        return self.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLHostAllowedCharacterSet())!
+        return self.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlHostAllowed)!
     }
 }

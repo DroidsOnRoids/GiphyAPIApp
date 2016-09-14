@@ -35,25 +35,25 @@ class StickersViewController : UITableViewController{
     }
     
     
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return stickers.count
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("cellGif", forIndexPath: indexPath) as UITableViewCell
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cellGif", for: indexPath) as UITableViewCell
         
-        if let sticker = stickers[indexPath.row] {
+        if let sticker = stickers[(indexPath as NSIndexPath).row] {
             cell.textLabel!.text = sticker.id
             
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
-                let url = NSURL(string: sticker.mediaUrl!)
-                let data = NSData(contentsOfURL: url!)
+            DispatchQueue.global().async {
+            let url = URL(string: sticker.mediaUrl!)
+                let data = try? Data(contentsOf: url!)
                 let image = UIImage(data: data!)
-                dispatch_async(dispatch_get_main_queue(), {
+                DispatchQueue.main.async(execute: {
                     cell.imageView!.image = image
                 })
             }

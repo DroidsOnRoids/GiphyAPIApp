@@ -15,9 +15,15 @@ struct Sticker: GiphyObject {
     var mediaUrl: String?
     
     init(json: [String: AnyObject]?) {
-        self.id = json?["id"] as? String
-        self.slug = json?["slug"] as? String
-        self.url = json?["url"] as? String
-        self.mediaUrl = json?["images"]?["fixed_height"]??["url"] as? String
+        id = json?["id"] as? String
+        slug = json?["slug"] as? String
+        url = json?["url"] as? String
+    
+        guard let json = json else { return }
+        
+        if let images = json["images"] as? [String: Any],
+            let fixedHeight = images["fixed_height"] as? [String: Any] {
+            mediaUrl = fixedHeight["url"] as? String
+        }
     }
 }

@@ -12,14 +12,14 @@ import Result
 
 
 enum SearchService {
-    case SearchGiphy(key: String)
-    case SearchGiphyWithLimit(key: String, limit: Int)
+    case searchGiphy(key: String)
+    case searchGiphyWithLimit(key: String, limit: Int)
 }
 
 extension SearchService: TargetType {
     
-    var baseURL: NSURL {
-        return NSURL(string: APIConstants.baseURL)!
+    var baseURL: URL {
+        return URL(string: APIConstants.baseURL)!
     }
     
     var path : String {
@@ -34,61 +34,60 @@ extension SearchService: TargetType {
         return "200"
     }
     
-    var sampleData: NSData {
-        guard let stubFile = stubFileName(forStatusCode: stubStatusCode),
-            data = NSData(contentsOfFile: stubFile) else { return NSData() }
-        
+    var sampleData: Data {
+        guard let stubFile = stubFileName(forStatusCode: stubStatusCode), let data = try? Data(contentsOf: URL(fileURLWithPath: stubFile)) else { return Data() }
+     
         return data
     }
-    
-    var parameters: [String: AnyObject]? {
+
+    var parameters: [String: Any]? {
         switch self {
-        case .SearchGiphy(let key):
-            return ["api_key" : APIConstants.betaKey, "q" : key]
-        case .SearchGiphyWithLimit(let key, let limit):
-            return ["api_key" : APIConstants.betaKey, "q" : key, "limit" : limit]
+        case .searchGiphy(let key):
+            return ["api_key" : APIConstants.betaKey as AnyObject, "q" : key as AnyObject]
+        case .searchGiphyWithLimit(let key, let limit):
+            return ["api_key" : APIConstants.betaKey as AnyObject, "q" : key as AnyObject, "limit" : limit as AnyObject]
         }
     }
     
-    var multipartBody: [MultipartFormData]? {
-        return nil
+    var task : Task{
+        return Task.request
     }
 }
 
 struct SearchAPI {
 
-    func searchForKey(searchingKey: String, completion: Result<[String: AnyObject], Error> -> ()) {
-        API.searchingService.request(.SearchGiphy(key: searchingKey)) { (result) in
+    func searchForKey(_ searchingKey: String, completion: @escaping (Result<[String: AnyObject], Moya.Error>) -> ()) {
+        _ = API.searchingService.request(.searchGiphy(key: searchingKey)) { (result) in
             switch result {
-            case let .Success(result):
+            case let .success(result):
                 do {
                     let json: [String: AnyObject]? = try result.mapJSON() as? [String: AnyObject]
                     if let json = json {
-                        completion(.Success(json))
+                        completion(.success(json))
                     }
                 } catch {
-                    completion(.Failure(Error.JSONMapping(result)))
+                    completion(.failure(Moya.Error.jsonMapping(result)))
                 }
-            case let .Failure(error):
-                completion(.Failure(error))
+            case let .failure(error):
+                completion(.failure(error))
             }
         }
     }
    
-    func searchForKeyWithLimit(searchingKey: String, limit: Int, completion: Result<[String: AnyObject], Error> -> ()) {
-        API.searchingService.request(.SearchGiphyWithLimit(key: searchingKey, limit: limit)) { (result) in
+    func searchForKeyWithLimit(_ searchingKey: String, limit: Int,  completion: @escaping (Result<[String: AnyObject], Moya.Error>) -> ()) {
+       _ = API.searchingService.request(.searchGiphyWithLimit(key: searchingKey, limit: limit)) { (result) in
             switch result {
-            case let .Success(result):
+            case let .success(result):
                 do {
                     let json: [String: AnyObject]? = try result.mapJSON() as? [String: AnyObject]
                     if let json = json {
-                        completion(.Success(json))
+                        completion(.success(json))
                     }
                 } catch {
-                    completion(.Failure(Error.JSONMapping(result)))
+                    completion(.failure(Error.jsonMapping(result)))
                 }
-            case let .Failure(error):
-                completion(.Failure(error))
+            case let .failure(error):
+                completion(.failure(error))
             }
         }
     }

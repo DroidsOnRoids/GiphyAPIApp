@@ -16,9 +16,19 @@ struct Gif : GiphyObject {
     var mediaUrl: String?
     
     init(json: [String: AnyObject]?) {
-        self.id = json?["id"] as? String
-        self.slug = json?["slug"] as? String
-        self.url = json?["url"] as? String
-        self.mediaUrl = json?["images"]?["fixed_height"]??["url"] as? String
+        slug = json?["slug"] as? String
+        url = json?["url"] as? String
+        id = json?["id"] as? String
+       
+        guard let json = json else { return }
+      //  let sjson = json as NSDictionary
+       // mediaUrl = sjson.value(forKeyPath: "images.fixed_height.url") as! String?
+       
+         if let images = json["images"] as? [String: Any],
+            let fixedHeight = images["fixed_height"] as? [String: Any] {
+            mediaUrl = fixedHeight["url"] as? String
+        }
+        
+    
     }
 }
