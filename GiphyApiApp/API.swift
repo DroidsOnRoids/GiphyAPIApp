@@ -20,9 +20,9 @@ struct API {
     static var stickerService = API.service(StickerService.self)
     
     fileprivate static func service<T: TargetType>(_ target: T.Type) ->  MoyaProvider<T> {
-        if stubbing && !disableRecording {
+        if stubbing {
             return MoyaProvider<T>(stubClosure: MoyaProvider.ImmediatelyStub)
-        } else if !stubbing {
+        } else if !disableRecording {
             return MoyaProvider<T>(plugins: [NetworkRecorderPlugin()])
         } else {
             return MoyaProvider<T>()
