@@ -9,13 +9,18 @@
 import Foundation
 import UIKit
 
+class GifCell: UITableViewCell {
+    @IBOutlet weak var id: UILabel!
+    @IBOutlet weak var gifImage: UIImageView!
+}
 
 class TrendingGifs: UITableViewController {
 
     override func viewDidLoad() {
+        tableView.contentInset.top = 20.0
         
         let trendingAPI = TrendingAPI()
-        let treindingLimit = 5
+        let treindingLimit = 10
         trendingAPI.requestLimitedTrendinGifs(treindingLimit) { (result) in
             if let dataValues = result.value?["data"] as? [AnyObject] {
                 for jsonObject in dataValues {
@@ -25,13 +30,12 @@ class TrendingGifs: UITableViewController {
         }
     }
     
-    var gifs: [Gif?] = [Gif?]() {
+    var gifs = [Gif?]() {
         didSet(newValue) {
             tableView.reloadData()
         }
     }
 
-    
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -40,20 +44,21 @@ class TrendingGifs: UITableViewController {
         return gifs.count
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cellGif", for: indexPath) as UITableViewCell
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> GifCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cellGif", for: indexPath) as! GifCell
 
-        if let gif = gifs[(indexPath as NSIndexPath).row] {
-            cell.textLabel!.text = gif.id
+        if let gif = gifs[indexPath.row] {
+            cell.id.text = gif.id
+           
+            guard let mediaURL = gif.mediaUrl, let url = URL(string: mediaURL) else { return cell }
+            
             DispatchQueue.global().async {
-                let url = URL(string: gif.mediaUrl!)
-                let data = try? Data(contentsOf: url!)
-                let image = UIImage(data: data!)
-                DispatchQueue.main.async(execute: {
-                    let cellForUpdate = tableView.cellForRow(at: indexPath)
-                    cellForUpdate!.imageView!.image = image
-                    
-                })
+                if let data = try? Data(contentsOf: url) {
+                    let image = UIImage(data: data)
+                    DispatchQueue.main.async(execute: {
+                        cell.gifImage.image = image
+                    })
+                }
             }
         }
 

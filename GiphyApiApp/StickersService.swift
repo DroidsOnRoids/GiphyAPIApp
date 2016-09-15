@@ -54,9 +54,9 @@ extension StickerService: TargetType {
     var parameters: [String: Any]? {
         switch self {
         case .stickerSearch(let key):
-            return ["q" : key as AnyObject, "api_key" : APIConstants.betaKey as AnyObject]
+            return ["q" : key as AnyObject, "api_key" : APIConstants.betaKey]
         case .strickerTranslate(let key):
-            return ["s" : key as AnyObject, "api_key" : APIConstants.betaKey as AnyObject]
+            return ["s" : key as AnyObject, "api_key" : APIConstants.betaKey]
         default:
             return ["api_key" : APIConstants.betaKey as AnyObject]
         }

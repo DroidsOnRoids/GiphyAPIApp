@@ -21,8 +21,6 @@ struct Gif : GiphyObject {
         id = json?["id"] as? String
        
         guard let json = json else { return }
-      //  let sjson = json as NSDictionary
-       // mediaUrl = sjson.value(forKeyPath: "images.fixed_height.url") as! String?
        
          if let images = json["images"] as? [String: Any],
             let fixedHeight = images["fixed_height"] as? [String: Any] {

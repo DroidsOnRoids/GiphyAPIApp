@@ -6,77 +6,12 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Stickers-->
-        <scene sceneID="62F-va-KZO">
-            <objects>
-                <tableViewController id="tbQ-hB-pAQ" userLabel="Stickers" customClass="StickersViewController" customModule="GiphyApiApp" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="WSO-hd-DQZ">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cellid" textLabel="dN0-WJ-n2s" style="IBUITableViewCellStyleDefault" id="dEl-l3-jVS">
-                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dEl-l3-jVS" id="8wM-De-ygq">
-                                    <frame key="frameInset" width="375" height="43"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="dN0-WJ-n2s">
-                                            <frame key="frameInset" minX="15" width="345" height="43"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="tbQ-hB-pAQ" id="7Sr-5f-WDM"/>
-                            <outlet property="delegate" destination="tbQ-hB-pAQ" id="8qW-Mu-Oy4"/>
-                        </connections>
-                    </tableView>
-                    <tabBarItem key="tabBarItem" title="Stickers" image="first" id="82c-RM-6v1"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="RlN-f2-rif" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="710" y="-432"/>
-        </scene>
-        <!--Search Gifs-->
-        <scene sceneID="LNW-1m-qmi">
-            <objects>
-                <tableViewController id="xwz-Wj-N7s" userLabel="Search Gifs" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="OPY-jX-oMM">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cellid" id="TGz-fx-Y7T">
-                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="TGz-fx-Y7T" id="gjL-p0-hYB">
-                                    <frame key="frameInset" width="375" height="43"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="xwz-Wj-N7s" id="Sj1-uh-XK3"/>
-                            <outlet property="delegate" destination="xwz-Wj-N7s" id="9Xr-9k-eh2"/>
-                        </connections>
-                    </tableView>
-                    <tabBarItem key="tabBarItem" title="Search Gifs" image="first" id="Mjo-zi-HKH"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="mNR-OX-1RF" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="734" y="441"/>
-        </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="yl2-sM-qoP">
             <objects>
                 <tabBarController id="49e-Tb-3d3" sceneMemberID="viewController">
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <nil key="simulatedTopBarMetrics"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="W28-zg-YXA">
                         <rect key="frame" x="0.0" y="975" width="768" height="49"/>
@@ -85,8 +20,6 @@
                     </tabBar>
                     <connections>
                         <segue destination="7dW-TS-1m5" kind="relationship" relationship="viewControllers" id="333-zL-4Gx"/>
-                        <segue destination="tbQ-hB-pAQ" kind="relationship" relationship="viewControllers" id="FtQ-Aq-U35"/>
-                        <segue destination="xwz-Wj-N7s" kind="relationship" relationship="viewControllers" id="Lc2-G5-MO0"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HuB-VB-40B" sceneMemberID="firstResponder"/>
@@ -98,26 +31,43 @@
             <objects>
                 <tableViewController title="Trending" id="7dW-TS-1m5" userLabel="Trending Gifs" customClass="TrendingGifs" customModule="GiphyApiApp" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="JmI-pe-Pnw">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="gifCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="cellGif" textLabel="yVu-YY-bEX" rowHeight="66" style="IBUITableViewCellStyleDefault" id="VcQ-NP-Ei1" customClass="GifCell" customModule="GiphyApiApp" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="gifCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="cellGif" rowHeight="66" id="VcQ-NP-Ei1" customClass="GifCell" customModule="GiphyApiApp" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="66"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="VcQ-NP-Ei1" id="3KK-Tt-XrT">
                                     <frame key="frameInset" width="375" height="65"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="yVu-YY-bEX">
-                                            <frame key="frameInset" minX="15" width="345" height="65"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aAE-zF-wm3">
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fcm-3h-q2F">
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="65" id="X37-0e-2vp"/>
+                                                <constraint firstAttribute="height" constant="65" id="Yc6-he-gSX"/>
+                                            </constraints>
+                                        </imageView>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstItem="aAE-zF-wm3" firstAttribute="leading" secondItem="fcm-3h-q2F" secondAttribute="trailing" constant="8" id="9bL-ki-Mrr"/>
+                                        <constraint firstItem="fcm-3h-q2F" firstAttribute="leading" secondItem="3KK-Tt-XrT" secondAttribute="leading" constant="5" id="EXL-Il-nwf"/>
+                                        <constraint firstAttribute="bottom" secondItem="aAE-zF-wm3" secondAttribute="bottom" constant="-1" id="H0b-pi-sgF"/>
+                                        <constraint firstAttribute="bottom" secondItem="fcm-3h-q2F" secondAttribute="bottom" id="JAg-bS-whO"/>
+                                        <constraint firstAttribute="trailing" secondItem="aAE-zF-wm3" secondAttribute="trailing" id="LJP-Qh-7NF"/>
+                                        <constraint firstItem="fcm-3h-q2F" firstAttribute="top" secondItem="3KK-Tt-XrT" secondAttribute="top" id="OGz-dm-2cQ"/>
+                                        <constraint firstItem="aAE-zF-wm3" firstAttribute="top" secondItem="3KK-Tt-XrT" secondAttribute="top" id="nBH-Y7-WQ7"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="gifImage" destination="fcm-3h-q2F" id="A2Y-XK-uk6"/>
+                                    <outlet property="id" destination="aAE-zF-wm3" id="6z6-Mh-Etx"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -125,11 +75,12 @@
                             <outlet property="delegate" destination="7dW-TS-1m5" id="S1R-GB-0qw"/>
                         </connections>
                     </tableView>
+                    <extendedEdge key="edgesForExtendedLayout"/>
                     <tabBarItem key="tabBarItem" title="Trending Gifs" image="first" id="djY-f3-zcC"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="s6v-2Q-30q" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="0.0" y="812"/>
+            <point key="canvasLocation" x="-0.80000000000000004" y="811.84407796101959"/>
         </scene>
     </scenes>
     <resources>
