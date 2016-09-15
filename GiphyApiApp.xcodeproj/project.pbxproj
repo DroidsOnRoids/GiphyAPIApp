@@ -24,7 +24,6 @@
 		E5B5CB3A1D3F6E6B00A58640 /* SearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B5CB391D3F6E6B00A58640 /* SearchService.swift */; };
 		E5B5CB441D3F74CD00A58640 /* GiphyApiAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B5CB431D3F74CD00A58640 /* GiphyApiAppTests.swift */; };
 		E5B5CB4C1D3F74E300A58640 /* TrendingServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B5CB4B1D3F74E300A58640 /* TrendingServiceTests.swift */; };
-		E5C27E1B1D3F9E6900B46CAF /* Networking in Resources */ = {isa = PBXBuildFile; fileRef = E5C27E1A1D3F9E6900B46CAF /* Networking */; };
 		E5C27E211D3F9F3000B46CAF /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C27E1D1D3F9F3000B46CAF /* API.swift */; };
 		E5C27E221D3F9F3000B46CAF /* APIConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C27E1E1D3F9F3000B46CAF /* APIConstants.swift */; };
 		E5C27E231D3F9F3000B46CAF /* StickersService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C27E1F1D3F9F3000B46CAF /* StickersService.swift */; };
@@ -67,7 +66,6 @@
 		E5B5CB431D3F74CD00A58640 /* GiphyApiAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiphyApiAppTests.swift; sourceTree = "<group>"; };
 		E5B5CB451D3F74CD00A58640 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E5B5CB4B1D3F74E300A58640 /* TrendingServiceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrendingServiceTests.swift; sourceTree = "<group>"; };
-		E5C27E1A1D3F9E6900B46CAF /* Networking */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Networking; sourceTree = "<group>"; };
 		E5C27E1D1D3F9F3000B46CAF /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		E5C27E1E1D3F9F3000B46CAF /* APIConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIConstants.swift; sourceTree = "<group>"; };
 		E5C27E1F1D3F9F3000B46CAF /* StickersService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StickersService.swift; sourceTree = "<group>"; };
@@ -147,7 +145,6 @@
 		E58F1D591D3F6BDD005CE833 /* GiphyApiApp */ = {
 			isa = PBXGroup;
 			children = (
-				E5C27E1A1D3F9E6900B46CAF /* Networking */,
 				E5C27E251D3F9F3400B46CAF /* Networking */,
 				E58F1D5A1D3F6BDD005CE833 /* AppDelegate.swift */,
 				E5B5CB511D3F7BF700A58640 /* ViewControllers */,
@@ -294,7 +291,6 @@
 			files = (
 				E58F1D671D3F6BDD005CE833 /* LaunchScreen.storyboard in Resources */,
 				E58F1D641D3F6BDD005CE833 /* Assets.xcassets in Resources */,
-				E5C27E1B1D3F9E6900B46CAF /* Networking in Resources */,
 				E58F1D621D3F6BDD005CE833 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -411,7 +407,8 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Config\n\n# Path to stubs file.\n# Remember to end it with /\n# This should be a folder reference, not a group (in Xcode)\npath=\"/GiphyApiApp/Networking/Stubs/\"\n\n# Script\ncurrent_dir=$(pwd)\nstubsPath=\"${current_dir}${path}\"\n\ninfoplist=\"$BUILT_PRODUCTS_DIR/$INFOPLIST_PATH\"\nif [[ -d $stubsPath ]]; then\n# if StubsDirectoryPath string doesn't exist, add it\n/usr/libexec/PlistBuddy -c \"Add :StubsDirectoryPath string $stubsPath\" \"${infoplist}\"\n# and if StubsDirectoryPath already existed, update it\n/usr/libexec/PlistBuddy -c \"Set :StubsDirectoryPath $stubsPath\" \"${infoplist}\"\nfi";
+			shellScript = "# Config\n\n# Path to stubs file.\n# Remember to end it with /\n# This should be a folder reference, not a group (in Xcode)\n\npath=\"/GiphyApiApp/Networking/Stubs/\"\n\n# Script\ncurrent_dir=$(pwd)\nstubsPath=\"${current_dir}${path}\"\nmkdir -p $stubsPath\ninfoplist=\"$BUILT_PRODUCTS_DIR/$INFOPLIST_PATH\"\nif [[ -d $stubsPath ]]; then\n# if StubsDirectoryPath string doesn't exist, add it\n/usr/libexec/PlistBuddy -c \"Add :StubsDirectoryPath string $stubsPath\" \"${infoplist}\"\n# and if StubsDirectoryPath already existed, update it\n/usr/libexec/PlistBuddy -c \"Set :StubsDirectoryPath $stubsPath\" \"${infoplist}\"\nfi";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
