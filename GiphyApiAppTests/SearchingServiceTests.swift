@@ -16,6 +16,7 @@ class SearchingServiceTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
+        API.stubbing = false
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }
     
@@ -48,6 +49,7 @@ extension SearchingServiceTests {
 extension SearchingServiceTests {
     
     func testSampleDataForSearch() {
+        API.stubbing = true
         XCTAssertNotEqual(Data(), SearchService.searchGiphy(key: "dog").sampleData)
     }
 }
@@ -59,46 +61,36 @@ extension SearchingServiceTests {
         let expectation = self.expectation(description: "request for searching dog's gifs")
         
         let searchAPI = SearchAPI()
+        var response : Result<[String : AnyObject], Moya.Error>?
+        
         searchAPI.searchForKey("dogs") { (result) in
-            print(result)
-            if let _ = result.error {
-                XCTFail()
-            } else {
-                let status = 200
-                XCTAssertEqual(status, result.value!["meta"]!["status"] as AnyObject as? Int)
-                XCTAssertNotEqual(0, result.value!["pagination"]!["count"] as AnyObject as? Int)
-            }
+            response = result
             expectation.fulfill()
         }
         
         waitForExpectations(timeout: 10) { error in
-            if let error = error  {
-                print("error \(error.localizedDescription)")
-            }
+            let status = 200
+            XCTAssertEqual(status, response?.value!["meta"]!["status"] as AnyObject as? Int)
+            XCTAssertNotEqual(0, response?.value!["pagination"]!["count"] as AnyObject as? Int)
         }
-}
+    }
     
     func testCallSearchingWithLimit() {
         let expectation = self.expectation(description: "call request for searching dogs gifs")
         
         let searchAPI = SearchAPI()
         let limitCount = 5
+        var response : Result<[String : AnyObject], Moya.Error>?
+        
         searchAPI.searchForKeyWithLimit("dogs", limit: limitCount, completion: { (result) in
-            print(result)
-            if let _ = result.error {
-                XCTFail()
-            } else {
-                let status = 200
-                XCTAssertEqual(status, result.value!["meta"]!["status"] as AnyObject as? Int)
-                XCTAssertEqual(limitCount, result.value!["pagination"]!["count"] as AnyObject as? Int)
-            }
+            response = result
             expectation.fulfill()
         })
-    
+        
         waitForExpectations(timeout: 10) { error in
-            if let error = error  {
-                print("error \(error.localizedDescription)")
-            }
+            let status = 200
+            XCTAssertEqual(status, response?.value!["meta"]!["status"] as AnyObject as? Int)
+            XCTAssertEqual(limitCount, response?.value!["pagination"]!["count"] as AnyObject as? Int)
         }
     }
 }

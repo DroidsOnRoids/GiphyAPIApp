@@ -71,21 +71,17 @@ extension StickerServiceTests {
         let expectation = self.expectation(description: "request for searching dog's stickers ")
         
         let stickerAPI = StickerAPI()
+        var response : Result<[String : AnyObject], Moya.Error>?
+        
+        
         stickerAPI.searchForSticker("cats") { (result) in
-            print(result)
-            if let _ = result.error {
-                XCTFail()
-            } else {
-                let status = 200
-                XCTAssertEqual(status, result.value!["meta"]!["status"] as AnyObject as? Int)
-            }
+            response = result
             expectation.fulfill()
         }
         
-        waitForExpectations(timeout: 10) { error in
-            if let error = error  {
-                print("error \(error.localizedDescription)")
-            }
+        waitForExpectations(timeout: 10) { _ in
+            let status = 200
+            XCTAssertEqual(status, response?.value!["meta"]!["status"] as AnyObject as? Int)
         }
     }
     
@@ -93,21 +89,16 @@ extension StickerServiceTests {
         let expectation = self.expectation(description: "request for dog's stickers translate")
         
         let stickerAPI = StickerAPI()
+        var response : Result<[String : AnyObject], Moya.Error>?
+        
         stickerAPI.translateSticker("dogs", completion: { (result) in
-            print(result)
-            if let _ = result.error {
-                XCTFail()
-            } else {
-                let status = 200
-                XCTAssertEqual(status, result.value!["meta"]!["status"] as AnyObject as? Int)
-            }
+            response = result
             expectation.fulfill()
         })
         
-        waitForExpectations(timeout: 10) { error in
-            if let error = error  {
-                print("error \(error.localizedDescription)")
-            }
+        waitForExpectations(timeout: 10) { _ in
+            let status = 200
+            XCTAssertEqual(status, response?.value!["meta"]!["status"] as AnyObject as? Int)
         }
     }
     
@@ -125,7 +116,7 @@ extension StickerServiceTests {
         }
         print(randomStickers)
         XCTAssertTrue(randomStickers.count > 1)
-
+        
     }
 }
 
@@ -143,7 +134,7 @@ extension StickerServiceTests {
             }
             expectation.fulfill()
         }
-
+        
     }
 }
 
