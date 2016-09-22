@@ -9,24 +9,22 @@
 import Foundation
 import UIKit
 
-struct Gif : GiphyObject {
+struct Gif: GiphyObject {
     var id: String?
     var slug: String?
     var url: String?
     var mediaUrl: String?
     
-    init(json: [String: AnyObject]?) {
+    init(json: [String: Any]?) {
         slug = json?["slug"] as? String
         url = json?["url"] as? String
         id = json?["id"] as? String
        
         guard let json = json else { return }
        
-         if let images = json["images"] as? [String: Any],
+        if let images = json["images"] as? [String: Any],
             let fixedHeight = images["fixed_height"] as? [String: Any] {
             mediaUrl = fixedHeight["url"] as? String
         }
-        
-    
     }
 }

@@ -48,11 +48,11 @@ extension StickerServiceTests {
     }
     
     func testPathForTrending() {
-        XCTAssertEqual(("https://api.giphy.com/v1/stickers/trending"), StickerService.stickerSearch(key: "key").baseURL.absoluteString + StickerService.strickerTrending().path)
+        XCTAssertEqual(("https://api.giphy.com/v1/stickers/trending"), StickerService.stickerSearch(key: "key").baseURL.absoluteString + StickerService.strickerTrending.path)
     }
     
     func testPathForRandom() {
-        XCTAssertEqual(("https://api.giphy.com/v1/stickers/random"), StickerService.stickerSearch(key: "key").baseURL.absoluteString + StickerService.stickerRoulette().path)
+        XCTAssertEqual(("https://api.giphy.com/v1/stickers/random"), StickerService.stickerSearch(key: "key").baseURL.absoluteString + StickerService.stickerRoulette.path)
     }
 }
 

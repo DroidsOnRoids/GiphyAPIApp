@@ -12,7 +12,7 @@ import XCTest
 
 class JSONValidatorTests: XCTestCase {
     
-    var jsonData : Data?
+    var jsonData: Data?
     
     override func setUp() {
         super.setUp()

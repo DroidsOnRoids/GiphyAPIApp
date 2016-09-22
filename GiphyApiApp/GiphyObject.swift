@@ -10,8 +10,8 @@ import Foundation
 import UIKit
 
 protocol GiphyObject {
-    var id : String? { get set }
-    var slug:  String? { get set }
-    var url:  String? { get set }
+    var id: String? { get set }
+    var slug: String? { get set }
+    var url: String? { get set }
     var mediaUrl: String? { get set }
 }

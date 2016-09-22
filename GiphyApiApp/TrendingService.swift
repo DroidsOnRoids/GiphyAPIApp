@@ -23,7 +23,7 @@ extension TrendingService: TargetType {
         return URL(string: APIConstants.baseURL)!
     }
     
-    var path : String {
+    var path: String {
         return "gifs/trending"
     }
     
@@ -44,13 +44,13 @@ extension TrendingService: TargetType {
     var parameters: [String: Any]? {
         switch self {
         case .trendingLimitedTo5:
-            return ["api_key" : APIConstants.betaKey as AnyObject, "limit" : 5 as AnyObject]
+            return ["api_key" : APIConstants.betaKey, "limit" : 5]
         case .trendingLimitedTo10:
-            return ["api_key" : APIConstants.betaKey as AnyObject, "limit" : 10 as AnyObject]
+            return ["api_key" : APIConstants.betaKey, "limit" : 10]
         case .trendingLimitedTo25:
-            return ["api_key" : APIConstants.betaKey as AnyObject, "limit" : 25 as AnyObject]
+            return ["api_key" : APIConstants.betaKey, "limit" : 25]
         case .trendingLimited(let limit):
-            return ["api_key" : APIConstants.betaKey as AnyObject, "limit" : limit as AnyObject]
+            return ["api_key" : APIConstants.betaKey, "limit" : limit]
         }
     }
     
