@@ -54,6 +54,6 @@ public final class NetworkRecorderPlugin: PluginType {
 
 extension String {
     var URLEscapedString: String {
-        return self.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlHostAllowed)!
+        return addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
     }
 }

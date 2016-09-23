@@ -5,10 +5,10 @@
 //  Created by Pawel Chmiel on 20.07.2016.
 //  Copyright © 2016 Pawel Chmiel. All rights reserved.
 //
+
 import Foundation
 import Moya
 import Result
-
 
 enum StickerService {
     case stickerSearch(key: String)
@@ -68,17 +68,16 @@ extension StickerService: TargetType {
 
 struct StickerAPI {
     
-    func searchForSticker(_ searchingKey: String, completion: @escaping (Result<[String: AnyObject], Moya.Error>) -> ()) {
+    static func searchForSticker(_ searchingKey: String, completion: @escaping (Result<[String: AnyObject], Moya.Error>) -> ()) {
        _ = API.stickerService.request(.stickerSearch(key: searchingKey)) { result in
             switch result {
             case .success(let result):
                 do {
-                    let json: [String: AnyObject]? = try result.mapJSON() as? [String: AnyObject]
-                    if let json = json {
+                    if let json = try result.mapJSON() as? [String: AnyObject] {
                         completion(.success(json))
                     }
                 } catch {
-                    completion(.failure(Error.jsonMapping(result)))
+                    completion(.failure(.jsonMapping(result)))
                 }
             case .failure(let error):
                 completion(.failure(error))
@@ -86,17 +85,16 @@ struct StickerAPI {
         }
     }
    
-    func translateSticker(_ searchingKey: String, completion: @escaping (Result<[String: AnyObject], Moya.Error>) -> ()) {
+    static func translateSticker(_ searchingKey: String, completion: @escaping (Result<[String: AnyObject], Moya.Error>) -> ()) {
         _ = API.stickerService.request(.strickerTranslate(key: searchingKey)) { result in
             switch result {
             case .success(let result):
                 do {
-                    let json: [String: AnyObject]? = try result.mapJSON() as? [String: AnyObject]
-                    if let json = json {
+                    if let json = try result.mapJSON() as? [String: AnyObject]  {
                         completion(.success(json))
                     }
                 } catch {
-                    completion(.failure(Error.jsonMapping(result)))
+                    completion(.failure(.jsonMapping(result)))
                 }
             case .failure(let error):
                 completion(.failure(error))
@@ -104,17 +102,16 @@ struct StickerAPI {
         }
     }
     
-    func randomSticker(_ completion: @escaping (Result<[String: AnyObject], Moya.Error>) -> ()) {
+    static func randomSticker(_ completion: @escaping (Result<[String: AnyObject], Moya.Error>) -> ()) {
        _ = API.stickerService.request(.stickerRoulette) { result in
             switch result {
             case .success(let result):
                 do {
-                    let json: [String: AnyObject]? = try result.mapJSON() as? [String: AnyObject]
-                    if let json = json {
+                    if let json = try result.mapJSON() as? [String: AnyObject] {
                         completion(.success(json))
                     }
                 } catch {
-                    completion(.failure(Error.jsonMapping(result)))
+                    completion(.failure(.jsonMapping(result)))
                 }
             case .failure(let error):
                 completion(.failure(error))
@@ -122,17 +119,16 @@ struct StickerAPI {
         }
     }
    
-    func trendingSticker(_ completion: @escaping (Result<[String: AnyObject], Moya.Error>) -> ()) {
+    static func trendingSticker(_ completion: @escaping (Result<[String: AnyObject], Moya.Error>) -> ()) {
        _ = API.stickerService.request(.strickerTrending) { result in
             switch result {
             case .success(let result):
                 do {
-                    let json: [String: AnyObject]? = try result.mapJSON() as? [String: AnyObject]
-                    if let json = json {
+                    if let json = try result.mapJSON() as? [String: AnyObject] {
                         completion(.success(json))
                     }
                 } catch {
-                    completion(.failure(Error.jsonMapping(result)))
+                    completion(.failure(.jsonMapping(result)))
                 }
             case .failure(let error):
                 completion(.failure(error))

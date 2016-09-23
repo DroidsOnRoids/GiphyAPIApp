@@ -1,8 +1,8 @@
 PODS:
   - Alamofire (4.0.0)
-  - Moya (8.0.0-beta.1):
-    - Moya/Core (= 8.0.0-beta.1)
-  - Moya/Core (8.0.0-beta.1):
+  - Moya (8.0.0-beta.2):
+    - Moya/Core (= 8.0.0-beta.2)
+  - Moya/Core (8.0.0-beta.2):
     - Alamofire (~> 4.0.0)
     - Result
   - Result (3.0.0)
@@ -16,14 +16,14 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   Moya:
-    :commit: 1df10bec42a6e10866180ca642cb24dd61813eda
+    :commit: 25b8072a2cffa3baff3aea90ed94afed2c03b076
     :git: https://github.com/Moya/Moya
 
 SPEC CHECKSUMS:
   Alamofire: fef59f00388f267e52d9b432aa5d93dc97190f14
-  Moya: 63c4a59d2643c824df8c5a3b3a5f38dc2b48b055
+  Moya: 920d40f738e6f4ece84010cec701bb9693be8251
   Result: 1b3e431f37cbcd3ad89c6aa9ab0ae55515fae3b6
 
-PODFILE CHECKSUM: 78623cada9cae96440f0854f563a87c5e827d6a8
+PODFILE CHECKSUM: 8077ea44839b3cb00bfd0eb65cff1ffb33ba5559
 
 COCOAPODS: 1.1.0.rc.2

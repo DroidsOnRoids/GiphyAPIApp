@@ -55,37 +55,35 @@ extension SearchService: TargetType {
 
 struct SearchAPI {
 
-    func searchForKey(_ searchingKey: String, completion: @escaping (Result<[String: AnyObject], Moya.Error>) -> ()) {
-        _ = API.searchingService.request(.searchGiphy(key: searchingKey)) { (result) in
+    static func searchForKey(_ searchingKey: String, completion: @escaping (Result<[String: AnyObject], Moya.Error>) -> ()) {
+        _ = API.searchingService.request(.searchGiphy(key: searchingKey)) { result in
             switch result {
-            case let .success(result):
+            case .success(let result):
                 do {
-                    let json: [String: AnyObject]? = try result.mapJSON() as? [String: AnyObject]
-                    if let json = json {
+                    if let json = try result.mapJSON() as? [String: AnyObject] {
                         completion(.success(json))
                     }
                 } catch {
-                    completion(.failure(Moya.Error.jsonMapping(result)))
+                    completion(.failure(.jsonMapping(result)))
                 }
-            case let .failure(error):
+            case .failure(let error):
                 completion(.failure(error))
             }
         }
     }
    
-    func searchForKeyWithLimit(_ searchingKey: String, limit: Int, completion: @escaping (Result<[String: AnyObject], Moya.Error>) -> ()) {
-       _ = API.searchingService.request(.searchGiphyWithLimit(key: searchingKey, limit: limit)) { (result) in
+    static func searchForKeyWithLimit(_ searchingKey: String, limit: Int, completion: @escaping (Result<[String: AnyObject], Moya.Error>) -> ()) {
+        _ = API.searchingService.request(.searchGiphyWithLimit(key: searchingKey, limit: limit)) { result in
             switch result {
-            case let .success(result):
+            case .success(let result):
                 do {
-                    let json: [String: AnyObject]? = try result.mapJSON() as? [String: AnyObject]
-                    if let json = json {
+                    if let json = try result.mapJSON() as? [String: AnyObject] {
                         completion(.success(json))
                     }
                 } catch {
-                    completion(.failure(Error.jsonMapping(result)))
+                    completion(.failure(.jsonMapping(result)))
                 }
-            case let .failure(error):
+            case .failure(let error):
                 completion(.failure(error))
             }
         }

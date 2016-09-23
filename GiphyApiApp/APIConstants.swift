@@ -14,12 +14,9 @@ struct APIConstants {
     static let betaKey = "dc6zaTOxFJmzC"
     static let baseURL = "https://api.giphy.com/v1/"
     static let stubsPath: String? = {
-        guard let infoPlist = Bundle.main.infoDictionary,
-            let stubsPath = infoPlist["StubsDirectoryPath"] as? String else { return nil }
-        
-        return stubsPath
+        let infoPlist = Bundle.main.infoDictionary
+        return infoPlist?["StubsDirectoryPath"] as? String
     }()
-
 }
 
 extension TargetType {

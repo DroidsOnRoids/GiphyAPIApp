@@ -19,10 +19,9 @@ class TrendingGifs: UITableViewController {
     override func viewDidLoad() {
         tableView.contentInset.top = 20.0
         
-        let trendingAPI = TrendingAPI()
         let trendingLimit = 10
         
-        trendingAPI.requestLimitedTrendinGifs(trendingLimit) { result in
+        TrendingAPI.requestLimitedTrendinGifs(trendingLimit) { result in
             if let dataValues = result.value?["data"] as? [AnyObject] {
                 for jsonObject in dataValues {
                     self.gifs.append(Gif(json: jsonObject as? [String : AnyObject]))
@@ -56,9 +55,9 @@ class TrendingGifs: UITableViewController {
             DispatchQueue.global().async {
                 if let data = try? Data(contentsOf: url) {
                     let image = UIImage(data: data)
-                    DispatchQueue.main.async(execute: {
+                    DispatchQueue.main.async {
                         cell.gifImage.image = image
-                    })
+                    }
                 }
             }
         }
