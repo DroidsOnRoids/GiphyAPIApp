@@ -14,18 +14,9 @@ import Result
 
 class TrendingServiceTests: XCTestCase {
     
-    override func setUp() {
-        super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-    
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
-    }
-    
 }
-//MARK: - Url Base
+
+// MARK: - Url Base
 extension TrendingServiceTests {
     
     func testUrlBaseForLimitedTop5() {
@@ -44,7 +35,8 @@ extension TrendingServiceTests {
     }
     
 }
-//MARK: - Path For Service
+
+// MARK: - Path For Service
 extension TrendingServiceTests {
     
     func testPathForTrending() {
@@ -53,28 +45,28 @@ extension TrendingServiceTests {
     
 }
 
-//MARK: - Parameters
+// MARK: - Parameters
 extension TrendingServiceTests {
     
     func testParametersForTop5() {
-        let parameters = ["api_key": APIConstants.betaKey , "limit": 5] as [String : Any]
+        let parameters = ["api_key" : APIConstants.betaKey , "limit" : 5] as [String : Any]
         let p = TrendingService.trendingLimitedTo5.parameters
-        XCTAssertEqual(parameters as NSDictionary , p! as NSDictionary)
+        XCTAssertEqual(parameters as NSDictionary, p! as NSDictionary)
     }
     
     
     func testParametersForTop10() {
-        let parameters = ["api_key": APIConstants.betaKey, "limit": 10] as [String : Any]
+        let parameters = ["api_key" : APIConstants.betaKey, "limit" : 10] as [String : Any]
         XCTAssertEqual(parameters as NSDictionary, TrendingService.trendingLimitedTo10.parameters! as NSDictionary)
     }
     
     func testParametersForTop25() {
-        let parameters = ["api_key": APIConstants.betaKey, "limit": 25] as [String : Any]
+        let parameters = ["api_key" : APIConstants.betaKey, "limit" : 25] as [String : Any]
         XCTAssertEqual(parameters as NSDictionary, TrendingService.trendingLimitedTo25.parameters! as NSDictionary)
     }
 }
 
-//MARK: - Sample Data
+// MARK: - Sample Data
 extension TrendingServiceTests {
     
     func testSampleDataForTop5() {
@@ -90,40 +82,36 @@ extension TrendingServiceTests {
     }
 }
 
-//MARK: - Testing requests for 5 Trending GIFS
+// MARK: - Testing requests for 5 Trending GIFS
 extension TrendingServiceTests {
     
     func testCall5TrendingGifs() {
         let expectation = self.expectation(description: "call request for 5 trending Gifs")
+        var response: Result<[String : AnyObject], Moya.Error>?
         
-        let trendingAPI = TrendingAPI()
-        var response : Result<[String : AnyObject], Moya.Error>?
-        
-        trendingAPI.request5TrendingGifs { result in
+        TrendingAPI.request5TrendingGifs { result in
             response = result
             expectation.fulfill()
         }
         
-        waitForExpectations(timeout: 10) { error in
+        waitForExpectations(timeout: 10) { _ in
             let status = 200
-            XCTAssertEqual(status, response?.value!["meta"]!["status"]! as AnyObject as? Int)
+            XCTAssertEqual(status, response?.value!["meta"]?["status"] as Any as? Int)
         }
     }
     
     func testStatus200() {
         let expectation = self.expectation(description: "Check result of request for 5 trending Gifs")
+        var response: Result<[String : AnyObject], Moya.Error>?
         
-        let trendingAPI = TrendingAPI()
-        var response : Result<[String : AnyObject], Moya.Error>?
-        
-        trendingAPI.request5TrendingGifs { result in
+        TrendingAPI.request5TrendingGifs { result in
             response = result
             expectation.fulfill()
         }
         
-        waitForExpectations(timeout: 10) { error in
+        waitForExpectations(timeout: 10) { _ in
             let status = 200
-            XCTAssertEqual(status, response?.value!["meta"]!["status"]! as AnyObject as? Int)
+            XCTAssertEqual(status, response?.value!["meta"]?["status"] as Any as? Int)
         }
     }
     
@@ -131,39 +119,35 @@ extension TrendingServiceTests {
         let expectation = self.expectation(description: "Read stub from disk")
         
         API.stubbing = true
-        let trendingAPI = TrendingAPI()
-        var response : Result<[String : AnyObject], Moya.Error>?
+        var response: Result<[String : AnyObject], Moya.Error>?
         
-        trendingAPI.request5TrendingGifs { result in
+        TrendingAPI.request5TrendingGifs { result in
             response = result
             expectation.fulfill()
         }
         
-        waitForExpectations(timeout: 10) { error in
+        waitForExpectations(timeout: 10) { _ in
             let status = 200
-            XCTAssertEqual(status, response?.value!["meta"]!["status"] as AnyObject as? Int)
+            XCTAssertEqual(status, response?.value!["meta"]?["status"] as Any as? Int)
         }
-        
     }
 }
 
-//MARK: - Testing requests for 10 Trending GIFS
+// MARK: - Testing requests for 10 Trending GIFS
 extension TrendingServiceTests {
     
     //TEST FOR 10
     
     func testCall10TrendingGifs() {
         let expectation = self.expectation(description: "call request for 5 trending Gifs")
+        var response: Result<[String : AnyObject], Moya.Error>?
         
-        let trendingAPI = TrendingAPI()
-        var response : Result<[String : AnyObject], Moya.Error>?
-        
-        trendingAPI.request10TrendingGifs { result in
+        TrendingAPI.request10TrendingGifs { result in
             response = result
             expectation.fulfill()
         }
         
-        waitForExpectations(timeout: 10) { error in
+        waitForExpectations(timeout: 10) { _ in
             if let _ = response?.error {
                 XCTFail()
             }
@@ -172,19 +156,16 @@ extension TrendingServiceTests {
     
     func testStatus200For10() {
         let expectation = self.expectation(description: "Check result of request for 5 trending Gifs")
+        var response: Result<[String : AnyObject], Moya.Error>?
         
-        let trendingAPI = TrendingAPI()
-        var response : Result<[String : AnyObject], Moya.Error>?
-        
-        trendingAPI.request10TrendingGifs { result in
+        TrendingAPI.request10TrendingGifs { result in
             response = result
             expectation.fulfill()
         }
         
-        waitForExpectations(timeout: 10) { error in
+        waitForExpectations(timeout: 10) { _ in
             let status = 200
             XCTAssertEqual(status, response?.value!["meta"]!["status"] as AnyObject as? Int)
-            
         }
     }
     
@@ -192,37 +173,33 @@ extension TrendingServiceTests {
         let expectation = self.expectation(description: "Read empty stub from disk")
         
         API.stubbing = true
-        let trendingAPI = TrendingAPI()
-        var response : Result<[String : AnyObject], Moya.Error>?
+        var response: Result<[String : AnyObject], Moya.Error>?
         
-        trendingAPI.request10TrendingGifs { result in
+        TrendingAPI.request10TrendingGifs { result in
             response = result
             expectation.fulfill()
         }
         
-        waitForExpectations(timeout: 10) { error in
+        waitForExpectations(timeout: 10) { _ in
             let status = 200
             XCTAssertEqual(status, response?.value!["meta"]!["status"] as AnyObject as? Int)
         }
-        
     }
 }
 
-//MARK: - Testing requests for 25 Trending GIFS
+// MARK: - Testing requests for 25 Trending GIFS
 extension TrendingServiceTests {
     
     func testCall25TrendingGifs() {
         let expectation = self.expectation(description: "call request for 5 trending Gifs")
+        var response: Result<[String : AnyObject], Moya.Error>?
         
-        let trendingAPI = TrendingAPI()
-        var response : Result<[String : AnyObject], Moya.Error>?
-        
-        trendingAPI.request25TrendingGifs { result in
+        TrendingAPI.request25TrendingGifs { result in
             response = result
             expectation.fulfill()
         }
         
-        waitForExpectations(timeout: 10) { error in
+        waitForExpectations(timeout: 10) { _ in
             if let _ = response?.error {
                 XCTFail()
             }
@@ -231,18 +208,16 @@ extension TrendingServiceTests {
     
     func testStatus200For25() {
         let expectation = self.expectation(description: "Check result of request for 5 trending Gifs")
+        var response: Result<[String : AnyObject], Moya.Error>?
         
-        let trendingAPI = TrendingAPI()
-        var response : Result<[String : AnyObject], Moya.Error>?
-        
-        trendingAPI.request25TrendingGifs { result in
+        TrendingAPI.request25TrendingGifs { result in
             response = result
             expectation.fulfill()
         }
         
-        waitForExpectations(timeout: 10) { error in
+        waitForExpectations(timeout: 10) { _ in
             let status = 200
-            XCTAssertEqual(status, response?.value!["meta"]!["status"] as AnyObject as? Int)
+            XCTAssertEqual(status, response?.value?["meta"]?["status"] as Any as? Int)
         }
     }
     
@@ -250,20 +225,18 @@ extension TrendingServiceTests {
         let expectation = self.expectation(description: "Read cleaned stub from disk")
         
         API.stubbing = true
-        let trendingAPI = TrendingAPI()
-        var response : Result<[String : AnyObject], Moya.Error>?
+        var response: Result<[String : AnyObject], Moya.Error>?
         
-        trendingAPI.request25TrendingGifs { result in
+        TrendingAPI.request25TrendingGifs { result in
             response = result
             expectation.fulfill()
         }
         
-        waitForExpectations(timeout: 10) { error in
+        waitForExpectations(timeout: 10) { _ in
             let status = 200
-            XCTAssertEqual(status, response?.value!["meta"]!["status"] as AnyObject as? Int)
+            XCTAssertEqual(status, response?.value?["meta"]?["status"] as Any as? Int)
         }
     }
-    
 }
 
 // Limit provided by user
@@ -271,18 +244,15 @@ extension TrendingServiceTests {
     
     func testRequestLimitedTrendingGifs() {
         let expectation = self.expectation(description: "request for 12 trending Gifs")
+        var response: Result<[String : AnyObject], Moya.Error>?
         
-        let trendingAPI = TrendingAPI()
-        var response : Result<[String : AnyObject], Moya.Error>?
-        
-        trendingAPI.requestLimitedTrendinGifs(12) { result in
+        TrendingAPI.requestLimitedTrendinGifs(12) { result in
             response = result
             expectation.fulfill()
         }
         
-        waitForExpectations(timeout: 10) { error in
-            XCTAssertEqual(12, response?.value!["pagination"]!["count"] as AnyObject as? Int)
+        waitForExpectations(timeout: 10) { _ in
+            XCTAssertEqual(12, response?.value?["pagination"]?["count"] as Any as? Int)
         }
-        
     }
 }

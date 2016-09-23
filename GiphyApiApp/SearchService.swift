@@ -10,7 +10,6 @@ import Foundation
 import Moya
 import Result
 
-
 enum SearchService {
     case searchGiphy(key: String)
     case searchGiphyWithLimit(key: String, limit: Int)
@@ -22,7 +21,7 @@ extension SearchService: TargetType {
         return URL(string: APIConstants.baseURL)!
     }
     
-    var path : String {
+    var path: String {
         return "gifs/search"
     }
     
@@ -43,54 +42,50 @@ extension SearchService: TargetType {
     var parameters: [String: Any]? {
         switch self {
         case .searchGiphy(let key):
-            return ["api_key" : APIConstants.betaKey as AnyObject, "q" : key as AnyObject]
+            return ["api_key" : APIConstants.betaKey, "q" : key]
         case .searchGiphyWithLimit(let key, let limit):
-            return ["api_key" : APIConstants.betaKey as AnyObject, "q" : key as AnyObject, "limit" : limit as AnyObject]
+            return ["api_key" : APIConstants.betaKey, "q" : key , "limit" : limit]
         }
     }
     
-    var task : Task{
+    var task: Task {
         return Task.request
     }
 }
 
 struct SearchAPI {
 
-    func searchForKey(_ searchingKey: String, completion: @escaping (Result<[String: AnyObject], Moya.Error>) -> ()) {
-        _ = API.searchingService.request(.searchGiphy(key: searchingKey)) { (result) in
+    static func searchForKey(_ searchingKey: String, completion: @escaping (Result<[String: AnyObject], Moya.Error>) -> ()) {
+        _ = API.searchingService.request(.searchGiphy(key: searchingKey)) { result in
             switch result {
-            case let .success(result):
+            case .success(let result):
                 do {
-                    let json: [String: AnyObject]? = try result.mapJSON() as? [String: AnyObject]
-                    if let json = json {
+                    if let json = try result.mapJSON() as? [String: AnyObject] {
                         completion(.success(json))
                     }
                 } catch {
-                    completion(.failure(Moya.Error.jsonMapping(result)))
+                    completion(.failure(.jsonMapping(result)))
                 }
-            case let .failure(error):
+            case .failure(let error):
                 completion(.failure(error))
             }
         }
     }
    
-    func searchForKeyWithLimit(_ searchingKey: String, limit: Int,  completion: @escaping (Result<[String: AnyObject], Moya.Error>) -> ()) {
-       _ = API.searchingService.request(.searchGiphyWithLimit(key: searchingKey, limit: limit)) { (result) in
+    static func searchForKeyWithLimit(_ searchingKey: String, limit: Int, completion: @escaping (Result<[String: AnyObject], Moya.Error>) -> ()) {
+        _ = API.searchingService.request(.searchGiphyWithLimit(key: searchingKey, limit: limit)) { result in
             switch result {
-            case let .success(result):
+            case .success(let result):
                 do {
-                    let json: [String: AnyObject]? = try result.mapJSON() as? [String: AnyObject]
-                    if let json = json {
+                    if let json = try result.mapJSON() as? [String: AnyObject] {
                         completion(.success(json))
                     }
                 } catch {
-                    completion(.failure(Error.jsonMapping(result)))
+                    completion(.failure(.jsonMapping(result)))
                 }
-            case let .failure(error):
+            case .failure(let error):
                 completion(.failure(error))
             }
         }
     }
-
-    
 }
